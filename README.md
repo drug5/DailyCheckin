@@ -24,6 +24,32 @@ pip3 install python-dotenv
 
 ---
 
+## Optional: Virtual environment (venv)
+
+If you prefer to keep dependencies isolated rather than installing globally, you can use a venv instead.
+
+```bash
+cd ~/discord-bot
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+When using venv, update your cron job to call the venv's Python interpreter directly — no need to activate first:
+
+```cron
+# Runs at 08:55 every day (window opens at 09:00)
+55 8 * * * cd /home/pi/discord-bot && venv/bin/python3 daily_quesy.py >> /home/pi/discord-bot/bot.log 2>&1
+```
+
+To deactivate the venv when you're done working in the shell:
+
+```bash
+deactivate
+```
+
+---
+
 ## Setup
 
 ### 1. Clone / copy the files
@@ -52,6 +78,12 @@ cp .env.example .env
 3. Paste it into `.env` as `DISCORD_CHANNEL_ID`
 
 ### 4. Configure `.env`
+
+A `.env.example` template is included in the repo. Copy it and fill in your values:
+
+```bash
+cp .env.example .env
+```
 
 ```env
 DISCORD_TOKEN=your_user_token_here
